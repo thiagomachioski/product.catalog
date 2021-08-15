@@ -11,8 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CategoryCommand {
+public class CategoryUpdateCommand {
     private String category;
-    private Date createdAt;
     private Date updatedAt;
 }
