@@ -5,13 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class CategoryUpdateCommand {
+public class CategoryCommand {
     private String category;
-    private Date updatedAt;
 }
