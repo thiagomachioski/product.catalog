@@ -3,10 +3,7 @@ package in.thiago.product.catalog.services.category;
 import in.thiago.product.catalog.domain.category.Category;
 import in.thiago.product.catalog.domain.category.CategoryHandler;
 import in.thiago.product.catalog.domain.enums.RequestType;
-import in.thiago.product.catalog.ui.category.dtos.CategoryCommand;
-import in.thiago.product.catalog.ui.category.dtos.CategoryCreateResult;
-import in.thiago.product.catalog.ui.category.dtos.CategoryResult;
-import in.thiago.product.catalog.ui.category.dtos.CategoryUpdateResult;
+import in.thiago.product.catalog.ui.category.dtos.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -37,6 +34,11 @@ public class CategoryHandlerImpl implements CategoryHandler {
     }
 
     @Override
+    public CategoryDeleteResult categoryToCategoryDeleteResult(Category category, RequestType requestType) {
+        return setCategoryToCategoryResults(category, requestType);
+    }
+
+    @Override
     public ArrayList<CategoryResult> categoryToCategoryResult(List<Category> categories) {
         var categoriesResult = new ArrayList<CategoryResult>();
         for (var category : categories) {
@@ -54,9 +56,11 @@ public class CategoryHandlerImpl implements CategoryHandler {
     }
 
     private <T> T setCategoryToCategoryResults(Category category, RequestType requestType) {
-        if(requestType == RequestType.POST)
+        if (requestType == RequestType.POST)
             return (T) new CategoryCreateResult(category.getId(), category.getCategory(), category.getCreatedAt());
+        else if (requestType == RequestType.PUT)
+            return (T) new CategoryUpdateResult(category.getId(), category.getCategory(), category.getCreatedAt(), category.getUpdatedAt());
 
-        return (T) new CategoryUpdateResult(category.getId(), category.getCategory(), category.getCreatedAt(), category.getUpdatedAt());
+        return (T) new CategoryDeleteResult(category.getId(), category.getCategory());
     }
 }

@@ -4,10 +4,7 @@ import in.thiago.product.catalog.domain.category.CategoryHandler;
 import in.thiago.product.catalog.domain.category.CategoryService;
 import in.thiago.product.catalog.domain.enums.RequestType;
 import in.thiago.product.catalog.repository.category.CategoryRepository;
-import in.thiago.product.catalog.ui.category.dtos.CategoryCommand;
-import in.thiago.product.catalog.ui.category.dtos.CategoryCreateResult;
-import in.thiago.product.catalog.ui.category.dtos.CategoryResult;
-import in.thiago.product.catalog.ui.category.dtos.CategoryUpdateResult;
+import in.thiago.product.catalog.ui.category.dtos.*;
 import in.thiago.product.catalog.untils.exception.CategoryCollectionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,10 +55,10 @@ public class CategoryServiceImpl implements CategoryService {
         var categoryWithId = categoryRepository.findById(id);
         var categoryWithSameName = categoryRepository.findByCategory(category.getCategory());
 
-        if(!categoryWithId.isPresent())
+        if (!categoryWithId.isPresent())
             throw new CategoryCollectionException(CategoryCollectionException.NotFoundException(id));
 
-        if(categoryWithSameName.isPresent() && categoryWithSameName.get().getId().equals(id))
+        if (categoryWithSameName.isPresent() && categoryWithSameName.get().getId().equals(id))
             throw new CategoryCollectionException(CategoryCollectionException.CategoryAlreadyExists());
 
         var categoryToUpdate = categoryHandler.categoryCommandToCategoryUpdate(categoryWithId.get(), category);
@@ -70,7 +67,13 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Optional<CategoryCreateResult> delete(String id) throws CategoryCollectionException {
-        return Optional.empty();
+    public CategoryDeleteResult delete(String id) throws CategoryCollectionException {
+        var result = categoryRepository.findById(id);
+        if (!result.isPresent())
+            throw new CategoryCollectionException(CategoryCollectionException.NotFoundException(id));
+        categoryRepository.deleteById(id);
+
+        return categoryHandler.categoryToCategoryDeleteResult(result.get(), RequestType.DELETE);
     }
+
 }
