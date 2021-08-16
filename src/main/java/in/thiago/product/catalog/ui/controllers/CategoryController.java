@@ -39,8 +39,8 @@ public class CategoryController {
     @PostMapping("/category")
     public ResponseEntity<?> create(@RequestBody CategoryCommand categoryCommand) {
         try {
-            categoryService.create(categoryCommand);
-            return new ResponseEntity<>(categoryCommand,HttpStatus.OK);
+            var result = categoryService.create(categoryCommand);
+            return new ResponseEntity<>(result,HttpStatus.OK);
         } catch (ConstraintViolationException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (CategoryCollectionException e) {
@@ -51,8 +51,8 @@ public class CategoryController {
     @PutMapping("/category/{id}")
     public ResponseEntity<?> update(@PathVariable("id") String id, @RequestBody CategoryCommand categoryCommand) {
         try {
-            categoryService.update(id, categoryCommand);
-            return new ResponseEntity<>(categoryCommand,HttpStatus.OK);
+            var result = categoryService.update(id, categoryCommand);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (ConstraintViolationException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         } catch (CategoryCollectionException e) {

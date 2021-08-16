@@ -2,9 +2,12 @@ package in.thiago.product.catalog.services.category;
 
 import in.thiago.product.catalog.domain.category.CategoryHandler;
 import in.thiago.product.catalog.domain.category.CategoryService;
+import in.thiago.product.catalog.domain.enums.RequestType;
 import in.thiago.product.catalog.repository.category.CategoryRepository;
 import in.thiago.product.catalog.ui.category.dtos.CategoryCommand;
+import in.thiago.product.catalog.ui.category.dtos.CategoryCreateResult;
 import in.thiago.product.catalog.ui.category.dtos.CategoryResult;
+import in.thiago.product.catalog.ui.category.dtos.CategoryUpdateResult;
 import in.thiago.product.catalog.untils.exception.CategoryCollectionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,18 +26,6 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryHandler categoryHandler;
 
     @Override
-    public CategoryResult create(CategoryCommand category) throws ConstraintViolationException, CategoryCollectionException {
-        var categoryOptional = categoryRepository.findByCategory(category.getCategory());
-
-        if (categoryOptional.isPresent())
-            throw new CategoryCollectionException(CategoryCollectionException.CategoryAlreadyExists());
-
-        var result = categoryRepository.save(categoryHandler.categoryCreateCommandToCategory(category));
-
-        return categoryHandler.categoryToCategoryResult(result);
-    }
-
-    @Override
     public List<CategoryResult> getAll() {
         var categories = categoryRepository.findAll();
         if (categories.size() > 0)
@@ -51,7 +42,19 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryResult update(String id, CategoryCommand category) throws CategoryCollectionException {
+    public CategoryCreateResult create(CategoryCommand category) throws ConstraintViolationException, CategoryCollectionException {
+        var categoryOptional = categoryRepository.findByCategory(category.getCategory());
+
+        if (categoryOptional.isPresent())
+            throw new CategoryCollectionException(CategoryCollectionException.CategoryAlreadyExists());
+
+        var result = categoryRepository.save(categoryHandler.categoryCreateCommandToCategory(category));
+
+        return categoryHandler.categoryToCategoryCreateResult(result, RequestType.POST);
+    }
+
+    @Override
+    public CategoryUpdateResult update(String id, CategoryCommand category) throws CategoryCollectionException {
         var categoryWithId = categoryRepository.findById(id);
         var categoryWithSameName = categoryRepository.findByCategory(category.getCategory());
 
@@ -63,11 +66,11 @@ public class CategoryServiceImpl implements CategoryService {
 
         var categoryToUpdate = categoryHandler.categoryCommandToCategoryUpdate(categoryWithId.get(), category);
         var result = categoryRepository.save(categoryToUpdate);
-        return categoryHandler.categoryToCategoryResult(result);
+        return categoryHandler.categoryToCategoryUpdateResult(result, RequestType.PUT);
     }
 
     @Override
-    public Optional<CategoryResult> delete(String id) throws CategoryCollectionException {
+    public Optional<CategoryCreateResult> delete(String id) throws CategoryCollectionException {
         return Optional.empty();
     }
 }
