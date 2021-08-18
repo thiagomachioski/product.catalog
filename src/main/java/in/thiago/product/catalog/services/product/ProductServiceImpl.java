@@ -57,7 +57,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductUpdateResult delete(String id) throws ProductCollectionException {
-        return null;
+    public ProductDeleteResult delete(String id) throws ProductCollectionException {
+        var result = productRepository.findById(id);
+        if (!result.isPresent())
+            throw new ProductCollectionException(ProductCollectionException.NotFoundException(id));
+        productRepository.deleteById(id);
+
+        return productHandler.productToProductDeleteResult(result.get(), RequestType.DELETE);
     }
 }

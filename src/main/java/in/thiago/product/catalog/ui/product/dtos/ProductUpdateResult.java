@@ -1,5 +1,6 @@
 package in.thiago.product.catalog.ui.product.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,5 +16,6 @@ public class ProductUpdateResult {
     private String description;
     private double price;
     private int quantity;
-    private ProductCategoryCommand productCategoryCommand;
+    @JsonProperty("category")
+    private ProductCategoryResult productCategoryResult;
 }

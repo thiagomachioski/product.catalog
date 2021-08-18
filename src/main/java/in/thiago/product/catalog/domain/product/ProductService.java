@@ -17,6 +17,6 @@ public interface ProductService {
 
     ProductUpdateResult update(String id, ProductCommand product) throws ProductCollectionException;
 
-    ProductUpdateResult delete(String id) throws ProductCollectionException;
+    ProductDeleteResult delete(String id) throws ProductCollectionException;
 
 }

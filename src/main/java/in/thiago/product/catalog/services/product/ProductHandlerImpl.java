@@ -17,24 +17,24 @@ public class ProductHandlerImpl implements ProductHandler {
     @Override
     public Product productCreateCommandToProduct(ProductCommand productCommand) {
         return new Product(productCommand.getTitle(), productCommand.getDescription(),
-                    productCommand.getPrice(), productCommand.getQuantity(), new Date(System.currentTimeMillis()),
-                        new Category(productCommand.getProductCategoryCommand().getId(), productCommand.getProductCategoryCommand().getCategory()));
+                productCommand.getPrice(), productCommand.getQuantity(), new Date(System.currentTimeMillis()),
+                new Category(productCommand.getProductCategoryCommand().getId(), productCommand.getProductCategoryCommand().getCategory()));
     }
 
     @Override
     public ProductResult productToProductResult(Product product) {
         return new ProductResult(product.getId(), product.getTitle(),
-                    product.getDescription(), product.getPrice(), product.getQuantity(),
-                        new ProductCategoryResult(product.getCategory().getId(), product.getCategory().getCategory()));
+                product.getDescription(), product.getPrice(), product.getQuantity(),
+                new ProductCategoryResult(product.getCategory().getId(), product.getCategory().getCategory()));
     }
 
     @Override
     public ArrayList<ProductResultList> productToProductResult(List<Product> products) {
         var productsResult = new ArrayList<ProductResultList>();
-        for(var product : products) {
+        for (var product : products) {
             productsResult.add(new ProductResultList(product.getId(), product.getTitle(),
                     product.getDescription(), product.getPrice(), product.getQuantity(),
-                        new ProductCategoryResult(product.getCategory().getId(), product.getCategory().getCategory())));
+                    new ProductCategoryResult(product.getCategory().getId(), product.getCategory().getCategory())));
         }
         return productsResult;
     }
@@ -51,7 +51,7 @@ public class ProductHandlerImpl implements ProductHandler {
 
     @Override
     public ProductDeleteResult productToProductDeleteResult(Product product, RequestType requestType) {
-        return null;
+        return setProductToProductResults(product, requestType);
     }
 
     @Override
@@ -59,14 +59,33 @@ public class ProductHandlerImpl implements ProductHandler {
         return null;
     }
 
+    @SuppressWarnings("unchecked")
     private <T> T setProductToProductResults(Product product, RequestType requestType) {
-        if (requestType == RequestType.POST)
-            return (T) new ProductCreateResult(product.getId(), product.getTitle(),
-                        product.getDescription(), product.getPrice(), product.getQuantity(),
-                            new ProductCategoryResult(product.getCategory().getId(), product.getCategory().getCategory()));
-        else if (requestType == RequestType.PUT)
-            return (T) new ProductUpdateResult();
 
-        return (T) new ProductDeleteResult();
+        if (requestType == RequestType.POST) {
+            return (T) new ProductCreateResult(
+                    product.getId(),
+                    product.getTitle(),
+                    product.getDescription(),
+                    product.getPrice(),
+                    product.getQuantity(),
+                    new ProductCategoryResult(product.getCategory().getId(), product.getCategory().getCategory()));
+        }
+        else if (requestType == RequestType.PUT) {
+            return (T) new ProductUpdateResult(
+                    product.getId(),
+                    product.getTitle(),
+                    product.getDescription(),
+                    product.getPrice(),
+                    product.getQuantity(),
+                    new ProductCategoryResult(product.getCategory().getId(), product.getCategory().getCategory()));
+        }
+        return (T) new ProductDeleteResult(
+                product.getId(),
+                product.getTitle(),
+                product.getDescription(),
+                product.getPrice(),
+                product.getQuantity(),
+                new ProductCategoryResult(product.getCategory().getId(), product.getCategory().getCategory()));
     }
 }

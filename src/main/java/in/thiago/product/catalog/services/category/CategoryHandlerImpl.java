@@ -55,6 +55,7 @@ public class CategoryHandlerImpl implements CategoryHandler {
         return categoryUpdate;
     }
 
+    @SuppressWarnings("unchecked")
     private <T> T setCategoryToCategoryResults(Category category, RequestType requestType) {
         if (requestType == RequestType.POST)
             return (T) new CategoryCreateResult(category.getId(), category.getCategory(), category.getCreatedAt());
