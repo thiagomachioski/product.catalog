@@ -7,7 +7,7 @@ public class CategoryCollectionException extends Exception {
     }
 
     public static String NotFoundException(String id) {
-        return "Category with " + id + " NOT FOUND";
+        return "Category with id " + id + " NOT FOUND";
     }
 
     public static String CategoryAlreadyExists() {

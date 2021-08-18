@@ -23,7 +23,9 @@ public class ProductHandlerImpl implements ProductHandler {
 
     @Override
     public ProductResult productToProductResult(Product product) {
-        return null;
+        return new ProductResult(product.getId(), product.getTitle(),
+                    product.getDescription(), product.getPrice(), product.getQuantity(),
+                        new ProductCategoryResult(product.getCategory().getId(), product.getCategory().getCategory()));
     }
 
     @Override

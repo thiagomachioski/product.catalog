@@ -7,7 +7,7 @@ public class ProductCollectionException extends Exception {
     }
 
     public static String NotFoundException(String id) {
-        return "Product with " + id + " NOT FOUND";
+        return "Product with id " + id + " NOT FOUND";
     }
 
     public static String ProductAlreadyExists() {

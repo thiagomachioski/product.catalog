@@ -7,15 +7,22 @@ import in.thiago.product.catalog.untils.exception.ProductCollectionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @GetMapping("/product/{id}")
+    public ResponseEntity<?> get(@PathVariable("id") String id) {
+        try {
+            return new ResponseEntity<>(productService.get(id), HttpStatus.OK);
+        } catch (ProductCollectionException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
 
     @PostMapping("/product")
     public ResponseEntity<?> create(@RequestBody ProductCommand productCommand) {

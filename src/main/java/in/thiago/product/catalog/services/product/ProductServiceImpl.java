@@ -34,20 +34,19 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResult get(String id) throws ProductCollectionException {
-        return null;
+        var product = productRepository.findById(id);
+        if(!product.isPresent())
+            throw new ProductCollectionException(ProductCollectionException.NotFoundException(id));
+        return productHandler.productToProductResult(product.get());
     }
 
     @Override
     public ProductCreateResult create(ProductCommand product) throws ConstraintViolationException, ProductCollectionException, CategoryCollectionException {
-
         var category = categoryRepository.findById(product.getProductCategoryCommand().getId());
-
         if(!category.isPresent())
             throw new CategoryCollectionException(CategoryCollectionException.NotFoundException(product.getProductCategoryCommand().getId()));
 
         var result = productRepository.save(productHandler.productCreateCommandToProduct(product));
-
-
         return productHandler.productToProductCreateResult(result, RequestType.POST);
     }
 
