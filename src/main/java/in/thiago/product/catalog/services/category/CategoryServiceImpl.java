@@ -5,7 +5,7 @@ import in.thiago.product.catalog.domain.category.CategoryService;
 import in.thiago.product.catalog.domain.enums.RequestType;
 import in.thiago.product.catalog.repository.category.CategoryRepository;
 import in.thiago.product.catalog.ui.category.dtos.*;
-import in.thiago.product.catalog.untils.exception.CategoryCollectionException;
+import in.thiago.product.catalog.utils.exception.CategoryCollectionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

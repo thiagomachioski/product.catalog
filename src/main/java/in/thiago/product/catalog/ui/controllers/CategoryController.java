@@ -2,7 +2,7 @@ package in.thiago.product.catalog.ui.controllers;
 
 import in.thiago.product.catalog.domain.category.CategoryService;
 import in.thiago.product.catalog.ui.category.dtos.CategoryCommand;
-import in.thiago.product.catalog.untils.exception.CategoryCollectionException;
+import in.thiago.product.catalog.utils.exception.CategoryCollectionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

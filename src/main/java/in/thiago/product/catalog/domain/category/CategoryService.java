@@ -1,7 +1,7 @@
 package in.thiago.product.catalog.domain.category;
 
 import in.thiago.product.catalog.ui.category.dtos.*;
-import in.thiago.product.catalog.untils.exception.CategoryCollectionException;
+import in.thiago.product.catalog.utils.exception.CategoryCollectionException;
 
 import javax.validation.ConstraintViolationException;
 import java.util.List;

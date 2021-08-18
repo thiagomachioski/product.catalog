@@ -1,4 +1,4 @@
-package in.thiago.product.catalog.untils.exception;
+package in.thiago.product.catalog.utils.exception;
 
 public class CategoryCollectionException extends Exception {
 

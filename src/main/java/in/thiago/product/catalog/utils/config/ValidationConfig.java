@@ -1,4 +1,4 @@
-package in.thiago.product.catalog.untils.config;
+package in.thiago.product.catalog.utils.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

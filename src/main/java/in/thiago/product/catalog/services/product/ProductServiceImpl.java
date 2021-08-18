@@ -6,8 +6,8 @@ import in.thiago.product.catalog.domain.product.ProductService;
 import in.thiago.product.catalog.repository.category.CategoryRepository;
 import in.thiago.product.catalog.repository.product.ProductRepository;
 import in.thiago.product.catalog.ui.product.dtos.*;
-import in.thiago.product.catalog.untils.exception.CategoryCollectionException;
-import in.thiago.product.catalog.untils.exception.ProductCollectionException;
+import in.thiago.product.catalog.utils.exception.CategoryCollectionException;
+import in.thiago.product.catalog.utils.exception.ProductCollectionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
