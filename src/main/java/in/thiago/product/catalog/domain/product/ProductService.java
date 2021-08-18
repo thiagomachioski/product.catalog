@@ -1,9 +1,6 @@
 package in.thiago.product.catalog.domain.product;
 
-import in.thiago.product.catalog.ui.product.dtos.ProductCommand;
-import in.thiago.product.catalog.ui.product.dtos.ProductCreateResult;
-import in.thiago.product.catalog.ui.product.dtos.ProductResult;
-import in.thiago.product.catalog.ui.product.dtos.ProductUpdateResult;
+import in.thiago.product.catalog.ui.product.dtos.*;
 import in.thiago.product.catalog.untils.exception.CategoryCollectionException;
 import in.thiago.product.catalog.untils.exception.ProductCollectionException;
 
@@ -12,7 +9,7 @@ import java.util.List;
 
 public interface ProductService {
 
-    List<ProductResult> getAll();
+    List<ProductResultList> getAll();
 
     ProductResult get(String id) throws ProductCollectionException;
 

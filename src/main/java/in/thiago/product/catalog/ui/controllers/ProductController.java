@@ -15,6 +15,12 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @GetMapping("/product/")
+    public ResponseEntity<?> get() {
+        var products = productService.getAll();
+            return new ResponseEntity<>(products, products.size() > 0 ? HttpStatus.OK : HttpStatus.OK.NOT_FOUND);
+    }
+
     @GetMapping("/product/{id}")
     public ResponseEntity<?> get(@PathVariable("id") String id) {
         try {

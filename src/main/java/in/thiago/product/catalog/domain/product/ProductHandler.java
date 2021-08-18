@@ -12,7 +12,7 @@ public interface ProductHandler {
 
     ProductResult productToProductResult(Product product);
 
-    ArrayList<ProductResult> productToProductResult(List<Product> products);
+    ArrayList<ProductResultList> productToProductResult(List<Product> products);
 
     ProductCreateResult productToProductCreateResult(Product product, RequestType requestType);
 

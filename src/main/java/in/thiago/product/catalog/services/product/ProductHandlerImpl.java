@@ -29,8 +29,14 @@ public class ProductHandlerImpl implements ProductHandler {
     }
 
     @Override
-    public ArrayList<ProductResult> productToProductResult(List<Product> products) {
-        return null;
+    public ArrayList<ProductResultList> productToProductResult(List<Product> products) {
+        var productsResult = new ArrayList<ProductResultList>();
+        for(var product : products) {
+            productsResult.add(new ProductResultList(product.getId(), product.getTitle(),
+                    product.getDescription(), product.getPrice(), product.getQuantity(),
+                        new ProductCategoryResult(product.getCategory().getId(), product.getCategory().getCategory())));
+        }
+        return productsResult;
     }
 
     @Override
