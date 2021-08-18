@@ -51,12 +51,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryUpdateResult update(String id, CategoryCommand category) throws CategoryCollectionException {
-        var categoryWithId = categoryRepository.findById(id);
-        var categoryWithSameName = categoryRepository.findByCategory(category.getCategory());
 
+        var categoryWithId = categoryRepository.findById(id);
         if (!categoryWithId.isPresent())
             throw new CategoryCollectionException(CategoryCollectionException.NotFoundException(id));
 
+        var categoryWithSameName = categoryRepository.findByCategory(category.getCategory());
         if (categoryWithSameName.isPresent() && categoryWithSameName.get().getId().equals(id))
             throw new CategoryCollectionException(CategoryCollectionException.CategoryAlreadyExists());
 

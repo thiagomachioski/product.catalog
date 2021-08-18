@@ -28,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResult get(String id) throws ProductCollectionException {
         var product = productRepository.findById(id);
-        if(!product.isPresent())
+        if (!product.isPresent())
             throw new ProductCollectionException(ProductCollectionException.NotFoundException(id));
         return productHandler.productToProductResult(product.get());
     }
@@ -42,18 +42,43 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductCreateResult create(ProductCommand product) throws ConstraintViolationException, ProductCollectionException, CategoryCollectionException {
-        var category = categoryRepository.findById(product.getProductCategoryCommand().getId());
-        if(!category.isPresent())
-            throw new CategoryCollectionException(CategoryCollectionException.NotFoundException(product.getProductCategoryCommand().getId()));
+    public ProductCreateResult create(ProductCreateCommand product) throws ConstraintViolationException, ProductCollectionException, CategoryCollectionException {
+
+        var category = categoryRepository.findById(product.getProductCategoryCreateCommand().getId());
+
+        if (!category.isPresent())
+            throw new CategoryCollectionException(CategoryCollectionException.NotFoundException(product.getProductCategoryCreateCommand().getId()));
+
+        var productWithSameTitle = productRepository.findByTitle(product.getTitle());
+
+        if (productWithSameTitle.isPresent())
+            throw new ProductCollectionException(ProductCollectionException.ProductAlreadyExists());
 
         var result = productRepository.save(productHandler.productCreateCommandToProduct(product));
         return productHandler.productToProductCreateResult(result, RequestType.POST);
     }
 
     @Override
-    public ProductUpdateResult update(String id, ProductCommand product) throws ProductCollectionException {
-        return null;
+    public ProductUpdateResult update(String id, ProductUpdateCommand product) throws ProductCollectionException, CategoryCollectionException {
+
+        var categoryWithId = categoryRepository.findById(product.getProductCategoryUpdateCommand().getId());
+
+        if (!categoryWithId.isPresent())
+            throw new CategoryCollectionException(CategoryCollectionException.NotFoundException(id));
+
+        var productWithId = productRepository.findById(id);
+
+        if (!productWithId.isPresent())
+            throw new ProductCollectionException(ProductCollectionException.NotFoundException(id));
+
+        var productWithSameTitle = productRepository.findByTitle(product.getTitle());
+
+        if (productWithSameTitle.isPresent() && productWithSameTitle.get().getId().equals(id))
+            throw new ProductCollectionException(ProductCollectionException.ProductAlreadyExists());
+
+        var productToUpdate = productHandler.productUpdateCommandToProduct(productWithId.get(), product, categoryWithId.get().getCategory());
+        var result = productRepository.save(productToUpdate);
+        return productHandler.productToProductUpdateResult(result, RequestType.PUT);
     }
 
     @Override

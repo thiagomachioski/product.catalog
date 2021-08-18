@@ -13,9 +13,9 @@ public interface ProductService {
 
     ProductResult get(String id) throws ProductCollectionException;
 
-    ProductCreateResult create(ProductCommand product) throws ConstraintViolationException, ProductCollectionException, CategoryCollectionException;
+    ProductCreateResult create(ProductCreateCommand product) throws ConstraintViolationException, ProductCollectionException, CategoryCollectionException;
 
-    ProductUpdateResult update(String id, ProductCommand product) throws ProductCollectionException;
+    ProductUpdateResult update(String id, ProductUpdateCommand product) throws ProductCollectionException, CategoryCollectionException;
 
     ProductDeleteResult delete(String id) throws ProductCollectionException;
 

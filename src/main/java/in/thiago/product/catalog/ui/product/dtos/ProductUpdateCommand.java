@@ -10,11 +10,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ProductCommand {
+public class ProductUpdateCommand {
     private String title;
     private String description;
     private double price;
     private int quantity;
     @JsonProperty("category")
-    private ProductCategoryCommand productCategoryCommand;
+    private ProductCategoryUpdateCommand productCategoryUpdateCommand;
 }

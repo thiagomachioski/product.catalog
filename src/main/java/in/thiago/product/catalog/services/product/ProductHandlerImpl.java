@@ -15,10 +15,10 @@ import java.util.List;
 public class ProductHandlerImpl implements ProductHandler {
 
     @Override
-    public Product productCreateCommandToProduct(ProductCommand productCommand) {
-        return new Product(productCommand.getTitle(), productCommand.getDescription(),
-                productCommand.getPrice(), productCommand.getQuantity(), new Date(System.currentTimeMillis()),
-                new Category(productCommand.getProductCategoryCommand().getId(), productCommand.getProductCategoryCommand().getCategory()));
+    public Product productCreateCommandToProduct(ProductCreateCommand productCreateCommand) {
+        return new Product(productCreateCommand.getTitle(), productCreateCommand.getDescription(),
+                productCreateCommand.getPrice(), productCreateCommand.getQuantity(), new Date(System.currentTimeMillis()),
+                new Category(productCreateCommand.getProductCategoryCreateCommand().getId(), productCreateCommand.getProductCategoryCreateCommand().getCategory()));
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ProductHandlerImpl implements ProductHandler {
 
     @Override
     public ProductUpdateResult productToProductUpdateResult(Product product, RequestType requestType) {
-        return null;
+        return setProductToProductResults(product, requestType);
     }
 
     @Override
@@ -55,8 +55,16 @@ public class ProductHandlerImpl implements ProductHandler {
     }
 
     @Override
-    public Product productCommandToProductUpdate(Product product, ProductCommand productCommand) {
-        return null;
+    public Product productUpdateCommandToProduct(Product product, ProductUpdateCommand productUpdateCommand, String category) {
+        var productUpdate = product;
+        productUpdate.setTitle(productUpdateCommand.getTitle());
+        productUpdate.setDescription(productUpdateCommand.getDescription());
+        productUpdate.setPrice(productUpdateCommand.getPrice());
+        productUpdate.setQuantity(productUpdateCommand.getQuantity());
+        productUpdate.setUpdatedAt(new Date(System.currentTimeMillis()));
+        productUpdate.getCategory().setId(productUpdateCommand.getProductCategoryUpdateCommand().getId());
+        productUpdate.getCategory().setCategory(category);
+        return productUpdate;
     }
 
     @SuppressWarnings("unchecked")

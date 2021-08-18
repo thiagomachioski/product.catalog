@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ProductHandler {
 
-    Product productCreateCommandToProduct(ProductCommand  productCommand);
+    Product productCreateCommandToProduct(ProductCreateCommand productCreateCommand);
 
     ProductResult productToProductResult(Product product);
 
@@ -20,6 +20,6 @@ public interface ProductHandler {
 
     ProductDeleteResult productToProductDeleteResult(Product product, RequestType requestType);
 
-    Product productCommandToProductUpdate(Product product, ProductCommand productCommand);
+    Product productUpdateCommandToProduct(Product product, ProductUpdateCommand productUpdateCommand, String category);
 
 }

@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ProductCategoryCommand {
+public class ProductCategoryCreateCommand {
     private String id;
     private String category;
 }
