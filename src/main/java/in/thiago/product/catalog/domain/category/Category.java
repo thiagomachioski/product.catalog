@@ -21,6 +21,11 @@ public class Category {
     private Date createdAt;
     private Date updatedAt;
 
+    public Category(String id, String category) {
+        this.id = id;
+        this.category = category;
+    }
+
     public Category(String category, Date createdAt) {
         this.category = category;
         this.createdAt = createdAt;

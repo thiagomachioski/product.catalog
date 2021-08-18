@@ -9,11 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ProductCreateResult {
+public class ProductCategoryResult {
     private String id;
-    private String title;
-    private String description;
-    private double price;
-    private int quantity;
-    private ProductCategoryResult productCategoryResult;
+    private String category;
 }

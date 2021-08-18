@@ -4,6 +4,7 @@ import in.thiago.product.catalog.ui.product.dtos.ProductCommand;
 import in.thiago.product.catalog.ui.product.dtos.ProductCreateResult;
 import in.thiago.product.catalog.ui.product.dtos.ProductResult;
 import in.thiago.product.catalog.ui.product.dtos.ProductUpdateResult;
+import in.thiago.product.catalog.untils.exception.CategoryCollectionException;
 import in.thiago.product.catalog.untils.exception.ProductCollectionException;
 
 import javax.validation.ConstraintViolationException;
@@ -15,7 +16,7 @@ public interface ProductService {
 
     ProductResult get(String id) throws ProductCollectionException;
 
-    ProductCreateResult create(ProductCommand product) throws ConstraintViolationException, ProductCollectionException;
+    ProductCreateResult create(ProductCommand product) throws ConstraintViolationException, ProductCollectionException, CategoryCollectionException;
 
     ProductUpdateResult update(String id, ProductCommand product) throws ProductCollectionException;
 

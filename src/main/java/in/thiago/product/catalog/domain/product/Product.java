@@ -25,4 +25,13 @@ public class Product {
     private Date createdAt;
     private Date updatedAt;
     private Category category;
+
+    public Product(String title, String description, double price, int quantity, Date createdAt, Category category) {
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.quantity = quantity;
+        this.createdAt = createdAt;
+        this.category = category;
+    }
 }
