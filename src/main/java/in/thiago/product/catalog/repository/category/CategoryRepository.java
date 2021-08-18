@@ -9,6 +9,8 @@ import java.util.Optional;
 
 @Repository
 public interface CategoryRepository extends MongoRepository<Category, String> {
+
     @Query("{category: ?0}")
     Optional<Category> findByCategory(String category);
+
 }

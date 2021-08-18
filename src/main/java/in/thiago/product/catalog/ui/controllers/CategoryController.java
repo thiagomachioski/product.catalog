@@ -18,7 +18,6 @@ public class CategoryController {
 
     @GetMapping("/category/{id}")
     public ResponseEntity<?> get(@PathVariable("id") String id) {
-
         try {
             return new ResponseEntity<>(categoryService.get(id), HttpStatus.OK);
         } catch (CategoryCollectionException e) {
